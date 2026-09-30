@@ -87,3 +87,46 @@ h1 {
 
     opacity: 0.55;
 }
+/* =========================
+   OPENING FADE
+   ========================= */
+
+#scene1 h1 {
+    animation: titleFade 3s ease forwards;
+}
+
+#scene1 .instruction {
+    animation: instructionFade 3s ease forwards;
+
+    animation-delay: 1.5s;
+
+    opacity: 0;
+}
+
+
+@keyframes titleFade {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes instructionFade {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.55;
+    }
+
+}
