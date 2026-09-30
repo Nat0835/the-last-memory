@@ -1,7 +1,3 @@
-/* =========================
-   BASIC PAGE
-   ========================= */
-
 * {
     box-sizing: border-box;
 }
@@ -10,7 +6,6 @@ html,
 body {
     margin: 0;
     padding: 0;
-
     width: 100%;
     height: 100%;
 
@@ -21,9 +16,7 @@ body {
 }
 
 
-/* =========================
-   SCENES
-   ========================= */
+/* SCENES */
 
 .scene {
     display: none;
@@ -42,28 +35,23 @@ body {
 }
 
 
-/* =========================
-   SCENE CONTENT
-   ========================= */
+/* SCENE CONTENT */
 
 .story-content {
-    display: flex;
+    width: 100%;
+    height: 100%;
 
+    display: flex;
     flex-direction: column;
 
     align-items: center;
     justify-content: center;
-
-    width: 100%;
-    height: 100%;
 }
 
 
-/* =========================
-   TITLE
-   ========================= */
+/* TITLE */
 
-h1 {
+#scene1 h1 {
     margin: 0;
 
     font-size: 5rem;
@@ -71,61 +59,54 @@ h1 {
     font-weight: 400;
 
     letter-spacing: 0.15em;
+
+    opacity: 0;
+
+    animation: titleFadeIn 3s ease forwards;
 }
 
 
-/* =========================
-   INSTRUCTION
-   ========================= */
+/* INSTRUCTION */
 
-.instruction {
+#scene1 .instruction {
     margin-top: 35px;
 
     font-size: 1rem;
 
     letter-spacing: 0.08em;
 
-    opacity: 0.55;
-}
-/* =========================
-   OPENING FADE
-   ========================= */
-
-#scene1 h1 {
-    animation: titleFade 3s ease forwards;
-}
-
-#scene1 .instruction {
-    animation: instructionFade 3s ease forwards;
-
-    animation-delay: 1.5s;
-
     opacity: 0;
+
+    animation: instructionFadeIn 2s ease forwards;
+
+    animation-delay: 2s;
 }
 
 
-@keyframes titleFade {
+/* TITLE ANIMATION */
 
-    from {
+@keyframes titleFadeIn {
+
+    0% {
         opacity: 0;
-        transform: translateY(10px);
     }
 
-    to {
+    100% {
         opacity: 1;
-        transform: translateY(0);
     }
 
 }
 
 
-@keyframes instructionFade {
+/* INSTRUCTION ANIMATION */
 
-    from {
+@keyframes instructionFadeIn {
+
+    0% {
         opacity: 0;
     }
 
-    to {
+    100% {
         opacity: 0.55;
     }
 
