@@ -1,81 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>The Last Memory</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <main>
+<main>
 
-        <!-- SCENE 1 -->
-        <section id="scene1" class="scene active">
+
+    <!-- ========================= -->
+    <!-- SCENE 1: BEGINNING -->
+    <!-- ========================= -->
+
+    <section id="scene1" class="scene active">
+
+        <div class="story-content">
 
             <h1>THE LAST MEMORY</h1>
 
-            <p>Click anywhere to begin.</p>
+            <p class="instruction">
+                Click anywhere to begin.
+            </p>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- SCENE 2 -->
-        <section id="scene2" class="scene">
 
-            <h2>Turn the clock back.</h2>
+    <!-- ========================= -->
+    <!-- SCENE 2: THE CLOCK -->
+    <!-- ========================= -->
+
+    <section id="scene2" class="scene">
+
+        <div class="story-content">
+
+            <p id="clock-memory">
+                I remember the sound first.
+            </p>
 
             <div id="clock">
+
+                <div class="clock-number twelve">12</div>
+                <div class="clock-number three">3</div>
+                <div class="clock-number six">6</div>
+                <div class="clock-number nine">9</div>
+
+                <div id="clock-center"></div>
+
                 <div id="clock-hand"></div>
+
             </div>
 
-            <p>Drag the hand backward.</p>
+            <p id="clock-instruction">
+                Turn the clock back.
+            </p>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- SCENE 3 -->
-        <section id="scene3" class="scene">
 
-            <h2>Find what you remember.</h2>
+    <!-- ========================= -->
+    <!-- SCENE 3: THE PHOTOGRAPH -->
+    <!-- ========================= -->
+
+    <section id="scene3" class="scene">
+
+        <div class="story-content">
+
+            <p id="photo-text">
+                I don't remember everything.
+            </p>
 
             <div id="memory">
+
+                <div id="memory-image"></div>
 
                 <div id="memory-cover"></div>
 
             </div>
 
-            <p>Move your cursor across the image.</p>
+            <p id="photo-instruction">
+                Find what you remember.
+            </p>
 
-        </section>
+        </div>
 
-
-        <!-- SCENE 4 -->
-        <section id="scene4" class="scene">
-
-            <h2>Something is missing.</h2>
-
-            <p>Put the memory back together.</p>
-
-        </section>
+    </section>
 
 
-        <!-- SCENE 5 -->
-        <section id="scene5" class="scene">
 
-            <h2>Maybe remembering isn't about keeping something.</h2>
+    <!-- ========================= -->
+    <!-- SCENE 4: MEMORY PIECES -->
+    <!-- ========================= -->
 
-            <p>Maybe it's about watching it change.</p>
+    <section id="scene4" class="scene">
 
-        </section>
+        <div class="story-content">
 
-    </main>
+            <p id="pieces-text">
+                But memories change when you return to them.
+            </p>
+
+            <div id="memory-pieces">
+
+                <div class="memory-piece piece1"></div>
+
+                <div class="memory-piece piece2"></div>
+
+                <div class="memory-piece piece3"></div>
+
+                <div class="memory-piece piece4"></div>
+
+            </div>
+
+            <p>
+                Put the memory back together.
+            </p>
+
+        </div>
+
+    </section>
 
 
-    <script src="script.js"></script>
+
+    <!-- ========================= -->
+    <!-- SCENE 5: END -->
+    <!-- ========================= -->
+
+    <section id="scene5" class="scene">
+
+        <div class="story-content">
+
+            <p class="ending">
+
+                Maybe remembering isn't about keeping something.
+
+                <br><br>
+
+                Maybe it's about watching it change.
+
+            </p>
+
+            <p
+                id="restart"
+                class="instruction">
+
+                Click to remember again.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
