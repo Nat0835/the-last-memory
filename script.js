@@ -74,8 +74,7 @@ document.addEventListener("mousemove", function(event) {
     }
 
     clockHand.style.transform =
-        "translateX(-50%) rotate(" + angle + "deg)";
-
+    "translate(-50%, -100%) rotate(" + angle + "deg)";
 
     if (angle < 60) {
 
