@@ -111,19 +111,42 @@ body {
     }
 
 }
-/* SCENE 2 */
+/* =========================
+   SCENE 2
+========================= */
+
+#scene2 {
+    background: #050505;
+    overflow: hidden;
+}
 
 #scene2 .story-content {
-    gap: 25px;
+    position: relative;
+    gap: 20px;
 }
 
 
 /* MEMORY TEXT */
 
 #clock-memory {
-    font-size: 1.4rem;
-    letter-spacing: 0.08em;
+    width: 500px;
+    max-width: 80vw;
+
     margin: 0;
+
+    font-size: 1.35rem;
+    font-weight: 300;
+
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+
+    min-height: 2.2em;
 }
 
 
@@ -132,13 +155,45 @@ body {
 #clock {
     position: relative;
 
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
 
-    border: 2px solid white;
+    margin: 15px 0 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+
     border-radius: 50%;
 
-    margin: 20px 0;
+    box-shadow:
+        0 0 30px rgba(255, 255, 255, 0.04),
+        inset 0 0 25px rgba(255, 255, 255, 0.03);
+
+    transition:
+        transform 0.8s ease,
+        opacity 0.8s ease;
+}
+
+
+/* SMALL CLOCK TICKS */
+
+#clock::before {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    top: 10px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    opacity: 0.6;
 }
 
 
@@ -147,36 +202,36 @@ body {
 .clock-number {
     position: absolute;
 
-    font-size: 1.2rem;
+    font-size: 0.85rem;
+
+    font-weight: 300;
+
+    opacity: 0.65;
 }
 
-
 .twelve {
-    top: 15px;
+    top: 20px;
     left: 50%;
 
     transform: translateX(-50%);
 }
 
-
 .three {
-    right: 18px;
+    right: 22px;
     top: 50%;
 
     transform: translateY(-50%);
 }
 
-
 .six {
-    bottom: 15px;
+    bottom: 20px;
     left: 50%;
 
     transform: translateX(-50%);
 }
 
-
 .nine {
-    left: 18px;
+    left: 22px;
     top: 50%;
 
     transform: translateY(-50%);
@@ -188,8 +243,8 @@ body {
 #clock-center {
     position: absolute;
 
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
 
     background: white;
 
@@ -201,6 +256,8 @@ body {
     transform: translate(-50%, -50%);
 
     z-index: 3;
+
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 
@@ -209,32 +266,56 @@ body {
 #clock-hand {
     position: absolute;
 
-    width: 3px;
-    height: 95px;
+    width: 2px;
+    height: 105px;
 
     background: white;
 
     left: 50%;
     top: 50%;
 
-    transform-origin: 50% 100%;
+    transform-origin: bottom center;
 
-    transform: translate(-50%, -100%) rotate(0deg);
+    transform:
+        translateX(-50%)
+        rotate(0deg);
 
     cursor: grab;
 
     z-index: 2;
+
+    transition:
+        background 0.3s ease;
+}
+
+#clock-hand:active {
+    cursor: grabbing;
 }
 
 
 /* INSTRUCTION */
 
 #clock-instruction {
-    margin: 0;
+    margin: 5px 0 0;
 
-    font-size: 0.9rem;
+    font-size: 0.75rem;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.15em;
 
-    opacity: 0.55;
+    text-transform: uppercase;
+
+    opacity: 0.4;
+
+    transition: opacity 0.5s ease;
+}
+
+
+/* WHEN THE USER MOVES BACK THROUGH TIME */
+
+#scene2.time-changing #clock {
+    opacity: 0.75;
+}
+
+#scene2.time-changing #clock-instruction {
+    opacity: 0.15;
 }
