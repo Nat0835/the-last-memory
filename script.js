@@ -33,23 +33,47 @@ document.getElementById("scene1").addEventListener(
 const clockHand = document.getElementById("clock-hand");
 const clock = document.getElementById("clock");
 const clockMemory = document.getElementById("clock-memory");
+const scene2 = document.getElementById("scene2");
 
 let draggingClock = false;
+let currentMemory = 0;
 
+
+/* MEMORY LINES */
+
+const memories = [
+    "I remember the sound first.",
+    "It was quiet.",
+    "I was waiting.",
+    "Someone was supposed to come.",
+    "Then I heard the door.",
+    "I remember now."
+];
+
+
+/* START DRAGGING */
 
 clockHand.addEventListener("mousedown", function() {
 
     draggingClock = true;
 
+    scene2.classList.add("time-changing");
+
 });
 
+
+/* STOP DRAGGING */
 
 document.addEventListener("mouseup", function() {
 
     draggingClock = false;
 
+    scene2.classList.remove("time-changing");
+
 });
 
+
+/* MOVE CLOCK */
 
 document.addEventListener("mousemove", function(event) {
 
@@ -57,55 +81,75 @@ document.addEventListener("mousemove", function(event) {
         return;
     }
 
+
     const rect = clock.getBoundingClientRect();
 
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
+
     const x = event.clientX - centerX;
     const y = event.clientY - centerY;
 
-    let angle = Math.atan2(y, x) * (180 / Math.PI);
+
+    let angle =
+        Math.atan2(y, x) * (180 / Math.PI);
+
 
     angle = angle + 90;
 
+
     if (angle < 0) {
-        angle = angle + 360;
+        angle += 360;
     }
 
+
     clockHand.style.transform =
-    "translate(-50%, -100%) rotate(" + angle + "deg)";
+        "translateX(-50%) rotate(" +
+        angle +
+        "deg)";
 
-    if (angle < 60) {
 
-        clockMemory.textContent =
-            "I remember the sound first.";
+    /*
+       Convert the clock position
+       into one of our memories.
+    */
 
-    } else if (angle < 120) {
+    const memoryNumber =
+        Math.floor(angle / 60);
 
-        clockMemory.textContent =
-            "It was quiet.";
 
-    } else if (angle < 180) {
+    if (memoryNumber !== currentMemory) {
 
-        clockMemory.textContent =
-            "I was waiting.";
+        currentMemory = memoryNumber;
 
-    } else if (angle < 240) {
-
-        clockMemory.textContent =
-            "Someone was supposed to come.";
-
-    } else if (angle < 300) {
-
-        clockMemory.textContent =
-            "Then I heard the door.";
-
-    } else {
-
-        clockMemory.textContent =
-            "I remember now.";
+        changeMemory(memories[memoryNumber]);
 
     }
 
 });
+
+
+/* CHANGE MEMORY TEXT */
+
+function changeMemory(newMemory) {
+
+    clockMemory.style.opacity = "0";
+
+    clockMemory.style.transform =
+        "translateY(8px)";
+
+
+    setTimeout(function() {
+
+        clockMemory.textContent =
+            newMemory;
+
+        clockMemory.style.opacity = "1";
+
+        clockMemory.style.transform =
+            "translateY(0)";
+
+    }, 250);
+
+}
