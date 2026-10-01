@@ -111,13 +111,130 @@ body {
     }
 
 }
-#scene2 {
-    display: flex;
+/* SCENE 2 */
+
+#scene2 .story-content {
+    gap: 25px;
 }
 
+
+/* MEMORY TEXT */
+
+#clock-memory {
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    margin: 0;
+}
+
+
+/* CLOCK */
+
 #clock {
+    position: relative;
+
     width: 280px;
     height: 280px;
-    border: 3px solid white;
+
+    border: 2px solid white;
     border-radius: 50%;
+
+    margin: 20px 0;
+}
+
+
+/* CLOCK NUMBERS */
+
+.clock-number {
+    position: absolute;
+
+    font-size: 1.2rem;
+}
+
+
+.twelve {
+    top: 15px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+.three {
+    right: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+
+.six {
+    bottom: 15px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+.nine {
+    left: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+
+/* CLOCK CENTER */
+
+#clock-center {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 3;
+}
+
+
+/* CLOCK HAND */
+
+#clock-hand {
+    position: absolute;
+
+    width: 3px;
+    height: 95px;
+
+    background: white;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: bottom center;
+
+    transform: translateX(-50%) rotate(0deg);
+
+    cursor: grab;
+
+    z-index: 2;
+}
+
+
+/* INSTRUCTION */
+
+#clock-instruction {
+    margin: 0;
+
+    font-size: 0.9rem;
+
+    letter-spacing: 0.08em;
+
+    opacity: 0.55;
 }
