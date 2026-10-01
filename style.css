@@ -319,3 +319,91 @@ body {
 #scene2.time-changing #clock-instruction {
     opacity: 0.15;
 }
+/* =========================
+   MEMORY FADING EFFECT
+========================= */
+
+#scene2 {
+    transition:
+        background-color 1s ease,
+        filter 1s ease;
+}
+
+
+/* The clock slowly disappears */
+
+#scene2.memory-deep #clock {
+    opacity: 0.35;
+
+    transform: scale(0.94);
+
+    filter: blur(1px);
+}
+
+
+/* The deepest part of the memory */
+
+#scene2.memory-deeper #clock {
+    opacity: 0.12;
+
+    transform: scale(0.88);
+
+    filter: blur(3px);
+}
+
+
+/* The text becomes more important */
+
+#scene2.memory-deep #clock-memory {
+    transform: scale(1.04);
+
+    letter-spacing: 0.16em;
+}
+
+
+#scene2.memory-deeper #clock-memory {
+    transform: scale(1.08);
+
+    letter-spacing: 0.2em;
+}
+
+
+/* Make the instruction disappear */
+
+#scene2.memory-deep #clock-instruction {
+    opacity: 0.15;
+}
+
+
+#scene2.memory-deeper #clock-instruction {
+    opacity: 0;
+}
+
+
+/* FINAL MEMORY */
+
+#scene2.memory-final #clock {
+    opacity: 0;
+
+    transform: scale(0.7);
+
+    filter: blur(8px);
+}
+
+
+#scene2.memory-final #clock-memory {
+    opacity: 1;
+
+    transform: scale(1.12);
+
+    letter-spacing: 0.22em;
+}
+
+
+/* Fade the entire scene before Scene 3 */
+
+#scene2.fade-out {
+    opacity: 0;
+
+    transition: opacity 2s ease;
+}
