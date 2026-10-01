@@ -37,6 +37,7 @@ const scene2 = document.getElementById("scene2");
 
 let draggingClock = false;
 let currentMemory = 0;
+let finalMemoryReached = false;
 
 
 /* MEMORY LINES */
@@ -84,16 +85,23 @@ document.addEventListener("mousemove", function(event) {
 
     const rect = clock.getBoundingClientRect();
 
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    const centerX =
+        rect.left + rect.width / 2;
+
+    const centerY =
+        rect.top + rect.height / 2;
 
 
-    const x = event.clientX - centerX;
-    const y = event.clientY - centerY;
+    const x =
+        event.clientX - centerX;
+
+    const y =
+        event.clientY - centerY;
 
 
     let angle =
-        Math.atan2(y, x) * (180 / Math.PI);
+        Math.atan2(y, x) *
+        (180 / Math.PI);
 
 
     angle = angle + 90;
@@ -104,6 +112,8 @@ document.addEventListener("mousemove", function(event) {
     }
 
 
+    /* Move the clock hand */
+
     clockHand.style.transform =
         "translateX(-50%) rotate(" +
         angle +
@@ -111,8 +121,8 @@ document.addEventListener("mousemove", function(event) {
 
 
     /*
-       Convert the clock position
-       into one of our memories.
+       Determine which memory
+       the viewer has reached.
     */
 
     const memoryNumber =
@@ -123,7 +133,11 @@ document.addEventListener("mousemove", function(event) {
 
         currentMemory = memoryNumber;
 
-        changeMemory(memories[memoryNumber]);
+        changeMemory(
+            memories[memoryNumber]
+        );
+
+        updateMemoryVisuals(memoryNumber);
 
     }
 
@@ -145,11 +159,110 @@ function changeMemory(newMemory) {
         clockMemory.textContent =
             newMemory;
 
-        clockMemory.style.opacity = "1";
+        clockMemory.style.opacity =
+            "1";
 
         clockMemory.style.transform =
             "translateY(0)";
 
     }, 250);
+
+}
+
+
+/* CHANGE THE VISUAL STATE */
+
+function updateMemoryVisuals(memoryNumber) {
+
+    /* Remove previous states */
+
+    scene2.classList.remove(
+        "memory-deep",
+        "memory-deeper",
+        "memory-final"
+    );
+
+
+    /*
+       Beginning:
+       Everything is clear.
+    */
+
+    if (memoryNumber <= 1) {
+
+        return;
+
+    }
+
+
+    /*
+       Middle:
+       The memory begins fading.
+    */
+
+    if (memoryNumber === 2 ||
+        memoryNumber === 3) {
+
+        scene2.classList.add(
+            "memory-deep"
+        );
+
+    }
+
+
+    /*
+       Deep memory:
+       The clock is almost gone.
+    */
+
+    if (memoryNumber === 4) {
+
+        scene2.classList.add(
+            "memory-deeper"
+        );
+
+    }
+
+
+    /*
+       Final memory.
+    */
+
+    if (memoryNumber === 5 &&
+        !finalMemoryReached) {
+
+        finalMemoryReached = true;
+
+        scene2.classList.add(
+            "memory-final"
+        );
+
+        beginFinalMemory();
+
+    }
+
+}
+
+
+/* FINAL MEMORY */
+
+function beginFinalMemory() {
+
+    clockMemory.textContent =
+        "I remember now.";
+
+
+    /*
+       Wait before moving
+       to the next scene.
+    */
+
+    setTimeout(function() {
+
+        scene2.classList.add(
+            "fade-out"
+        );
+
+    }, 2500);
 
 }
