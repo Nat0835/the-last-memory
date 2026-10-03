@@ -538,3 +538,8 @@ body {
         opacity 2s ease,
         transform 2s ease;
 }
+#scene3.active {
+    display: flex;
+
+    opacity: 1;
+}
