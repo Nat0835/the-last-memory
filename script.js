@@ -266,3 +266,125 @@ function beginFinalMemory() {
     }, 2500);
 
 }
+const memory = document.getElementById("memory");
+const memoryCover = document.getElementById("memory-cover");
+const scene3 = document.getElementById("scene3");
+const photoText = document.getElementById("photo-text");
+
+let revealedAmount = 0;
+let lastRevealX = null;
+let lastRevealY = null;
+
+
+/* MOUSE MOVEMENT OVER PHOTO */
+
+memory.addEventListener("mousemove", function(event) {
+
+    const rect = memory.getBoundingClientRect();
+
+    const x =
+        event.clientX - rect.left;
+
+    const y =
+        event.clientY - rect.top;
+
+
+    /*
+       Create a circular opening
+       around the mouse.
+    */
+
+    const radius = 70;
+
+
+    memoryCover.style.background =
+        `radial-gradient(
+            circle ${radius}px at ${x}px ${y}px,
+            transparent 0%,
+            rgba(5,5,5,0.95) 100%
+        )`;
+
+
+    /*
+       Count how much the viewer
+       has explored.
+    */
+
+    if (lastRevealX !== null) {
+
+        const distance = Math.sqrt(
+            Math.pow(x - lastRevealX, 2) +
+            Math.pow(y - lastRevealY, 2)
+        );
+
+
+        if (distance > 20) {
+
+            revealedAmount += distance;
+
+        }
+
+    }
+
+
+    lastRevealX = x;
+    lastRevealY = y;
+
+
+    /*
+       Once they've explored enough
+       of the photograph...
+    */
+
+    if (revealedAmount > 1800) {
+
+        completePhoto();
+
+    }
+
+});
+
+
+/* RESET WHEN CURSOR LEAVES */
+
+memory.addEventListener("mouseleave", function() {
+
+    memoryCover.style.background =
+        "#050505";
+
+    lastRevealX = null;
+    lastRevealY = null;
+
+});
+
+
+/* COMPLETE MEMORY */
+
+function completePhoto() {
+
+    if (scene3.classList.contains("photo-complete")) {
+        return;
+    }
+
+
+    scene3.classList.add(
+        "photo-complete"
+    );
+
+
+    photoText.textContent =
+        "Some things come back differently.";
+
+
+    setTimeout(function() {
+
+        /*
+           We'll connect this to
+           Scene 4 later.
+        */
+
+        showScene(4);
+
+    }, 2500);
+
+}
