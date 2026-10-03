@@ -259,11 +259,22 @@ function beginFinalMemory() {
 
     setTimeout(function() {
 
-        scene2.classList.add(
+    scene2.classList.add(
+        "fade-out"
+    );
+
+
+    setTimeout(function() {
+
+        showScene(3);
+
+        scene2.classList.remove(
             "fade-out"
         );
 
-    }, 2500);
+    }, 2000);
+
+}, 2500);
 
 }
 const memory = document.getElementById("memory");
