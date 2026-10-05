@@ -543,3 +543,147 @@ body {
 
     opacity: 1;
 }
+/* =========================
+   SCENE 4
+========================= */
+
+#scene4 {
+    background: #050505;
+}
+
+
+/* TEXT */
+
+#pieces-text {
+    width: 600px;
+    max-width: 80vw;
+
+    margin: 0 0 25px;
+
+    font-size: 1.25rem;
+
+    font-weight: 300;
+
+    letter-spacing: 0.1em;
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* PUZZLE AREA */
+
+#memory-pieces {
+    position: relative;
+
+    width: 500px;
+    height: 330px;
+
+    max-width: 80vw;
+    max-height: 55vh;
+}
+
+
+/* EACH PIECE */
+
+.memory-piece {
+    position: absolute;
+
+    width: 250px;
+    height: 165px;
+
+    background-image: url("memory.jpg");
+
+    background-size: 500px 330px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    cursor: grab;
+
+    transition:
+        box-shadow 0.3s ease,
+        transform 0.2s ease;
+}
+
+
+.memory-piece:active {
+    cursor: grabbing;
+
+    z-index: 10;
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,0.15);
+}
+
+
+/* IMAGE POSITIONS */
+
+.piece1 {
+    background-position: 0 0;
+
+    left: 0;
+    top: 0;
+}
+
+
+.piece2 {
+    background-position: 100% 0;
+
+    left: 250px;
+    top: 0;
+}
+
+
+.piece3 {
+    background-position: 0 100%;
+
+    left: 0;
+    top: 165px;
+}
+
+
+.piece4 {
+    background-position: 100% 100%;
+
+    left: 250px;
+    top: 165px;
+}
+
+
+/* INSTRUCTION */
+
+#pieces-instruction {
+    margin: 25px 0 0;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+
+    opacity: 0.4;
+}
+
+
+/* COMPLETED MEMORY */
+
+#scene4.memory-complete #pieces-text {
+    opacity: 0;
+
+    transition: opacity 1s ease;
+}
+
+
+#scene4.memory-complete #pieces-instruction {
+    opacity: 0;
+
+    transition: opacity 1s ease;
+}
+
+
+#scene4.memory-complete #memory-pieces {
+    transform: scale(1.03);
+
+    transition: transform 1.5s ease;
+}
