@@ -399,3 +399,214 @@ function completePhoto() {
     }, 2500);
 
 }
+const pieces = document.querySelectorAll(".memory-piece");
+const puzzle = document.getElementById("memory-pieces");
+const scene4 = document.getElementById("scene4");
+
+let activePiece = null;
+let offsetX = 0;
+let offsetY = 0;
+
+
+/* START DRAGGING */
+
+pieces.forEach(function(piece) {
+
+    piece.addEventListener("mousedown", function(event) {
+
+        activePiece = piece;
+
+        const rect =
+            piece.getBoundingClientRect();
+
+        offsetX =
+            event.clientX - rect.left;
+
+        offsetY =
+            event.clientY - rect.top;
+
+        piece.style.zIndex = "10";
+
+    });
+
+});
+
+
+/* MOVE PIECE */
+
+document.addEventListener("mousemove", function(event) {
+
+    if (!activePiece) {
+        return;
+    }
+
+
+    const puzzleRect =
+        puzzle.getBoundingClientRect();
+
+
+    let x =
+        event.clientX -
+        puzzleRect.left -
+        offsetX;
+
+
+    let y =
+        event.clientY -
+        puzzleRect.top -
+        offsetY;
+
+
+    activePiece.style.left =
+        x + "px";
+
+    activePiece.style.top =
+        y + "px";
+
+});
+
+
+/* STOP DRAGGING */
+
+document.addEventListener("mouseup", function() {
+
+    if (!activePiece) {
+        return;
+    }
+
+
+    checkPiecePosition(activePiece);
+
+    activePiece.style.zIndex = "1";
+
+    activePiece = null;
+
+});
+
+
+/* CHECK WHETHER PIECE IS CLOSE ENOUGH */
+
+function checkPiecePosition(piece) {
+
+    const className =
+        piece.classList[1];
+
+
+    let targetX = 0;
+    let targetY = 0;
+
+
+    if (className === "piece1") {
+
+        targetX = 0;
+        targetY = 0;
+
+    }
+
+
+    if (className === "piece2") {
+
+        targetX = 250;
+        targetY = 0;
+
+    }
+
+
+    if (className === "piece3") {
+
+        targetX = 0;
+        targetY = 165;
+
+    }
+
+
+    if (className === "piece4") {
+
+        targetX = 250;
+        targetY = 165;
+
+    }
+
+
+    const currentX =
+        parseFloat(piece.style.left);
+
+
+    const currentY =
+        parseFloat(piece.style.top);
+
+
+    const distance =
+        Math.sqrt(
+            Math.pow(currentX - targetX, 2) +
+            Math.pow(currentY - targetY, 2)
+        );
+
+
+    /*
+       If the piece is close enough,
+       snap it into place.
+    */
+
+    if (distance < 60) {
+
+        piece.style.left =
+            targetX + "px";
+
+        piece.style.top =
+            targetY + "px";
+
+        piece.dataset.correct =
+            "true";
+
+    }
+
+
+    checkPuzzleComplete();
+
+}
+
+
+/* CHECK ALL FOUR PIECES */
+
+function checkPuzzleComplete() {
+
+    let complete = true;
+
+
+    pieces.forEach(function(piece) {
+
+        if (piece.dataset.correct !== "true") {
+
+            complete = false;
+
+        }
+
+    });
+
+
+    if (complete) {
+
+        finishPuzzle();
+
+    }
+
+}
+
+
+/* FINISH SCENE 4 */
+
+function finishPuzzle() {
+
+    scene4.classList.add(
+        "memory-complete"
+    );
+
+
+    setTimeout(function() {
+
+        showScene(5);
+
+    }, 3000);
+
+}
