@@ -610,3 +610,11 @@ function finishPuzzle() {
     }, 3000);
 
 }
+document.getElementById("restart").addEventListener(
+    "click",
+    function() {
+
+        showScene(1);
+
+    }
+);
