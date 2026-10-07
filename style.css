@@ -552,6 +552,45 @@ body {
     opacity: 1;
 }
 /* =========================
+   SCENE 3 MEMORY TEXTURE
+========================= */
+
+#memory-image {
+    filter:
+        grayscale(100%)
+        contrast(0.85)
+        blur(0.5px);
+
+    transition:
+        filter 1s ease;
+}
+
+
+/* Subtle film grain */
+
+#memory::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.08;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            rgba(255,255,255,0.5) 0,
+            rgba(255,255,255,0.5) 1px,
+            transparent 1px,
+            transparent 3px
+        );
+
+    mix-blend-mode: screen;
+}
+/* =========================
    SCENE 4
 ========================= */
 
