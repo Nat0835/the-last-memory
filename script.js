@@ -26,6 +26,8 @@ document.getElementById("scene1").addEventListener(
     "click",
     function() {
 
+        startAudio();
+
         showScene(2);
 
     }
@@ -618,3 +620,114 @@ document.getElementById("restart").addEventListener(
 
     }
 );
+/* =========================
+   SOUND DESIGN
+========================= */
+
+let audioContext;
+let ambientStarted = false;
+
+
+/* CREATE AUDIO */
+
+function startAudio() {
+
+    if (ambientStarted) {
+        return;
+    }
+
+    audioContext =
+        new (window.AudioContext ||
+        window.webkitAudioContext)();
+
+    ambientStarted = true;
+
+    playAmbient();
+
+}
+
+
+/* VERY QUIET AMBIENT SOUND */
+
+function playAmbient() {
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.value = 55;
+
+    gain.gain.value = 0.015;
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+
+    oscillator.start();
+
+}
+
+
+/* SMALL SOUND */
+
+function playMemorySound(
+    frequency = 180,
+    duration = 0.15,
+    volume = 0.025
+) {
+
+    if (!audioContext) {
+        return;
+    }
+
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.value =
+        frequency;
+
+
+    gain.gain.setValueAtTime(
+        volume,
+        audioContext.currentTime
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime +
+        duration
+    );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime +
+        duration
+    );
+
+}
