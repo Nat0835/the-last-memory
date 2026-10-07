@@ -133,17 +133,25 @@ document.addEventListener("mousemove", function(event) {
 
     if (memoryNumber !== currentMemory) {
 
-        currentMemory = memoryNumber;
+    currentMemory = memoryNumber;
 
-        changeMemory(
-            memories[memoryNumber]
-        );
+    changeMemory(
+        memories[memoryNumber]
+    );
 
-        updateMemoryVisuals(memoryNumber);
+    updateMemoryVisuals(
+        memoryNumber
+    );
 
-    }
+    playMemorySound(
+        120 + (memoryNumber * 25),
+        0.25,
+        0.018
+    );
 
-});
+}
+
+
 
 
 /* CHANGE MEMORY TEXT */
