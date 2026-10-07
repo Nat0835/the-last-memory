@@ -28,10 +28,8 @@ body {
     justify-content: center;
 
     text-align: center;
-}
 
-.scene.active {
-    display: flex;
+    overflow: hidden;
 }
 
 
