@@ -319,11 +319,13 @@ memory.addEventListener("mousemove", function(event) {
 
 
     memoryCover.style.background =
-        `radial-gradient(
-            circle ${radius}px at ${x}px ${y}px,
-            transparent 0%,
-            rgba(5,5,5,0.95) 100%
-        )`;
+    `radial-gradient(
+        circle ${radius}px at ${x}px ${y}px,
+        rgba(5,5,5,0) 0%,
+        rgba(5,5,5,0.15) 35%,
+        rgba(5,5,5,0.65) 70%,
+        rgba(5,5,5,0.95) 100%
+    )`;
 
 
     /*
