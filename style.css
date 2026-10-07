@@ -732,7 +732,13 @@ body {
 
     transform: rotate(-3deg);
 }
+/* THE MEMORY ISN'T PERFECT */
 
+.piece6 {
+    filter:
+        brightness(0.75)
+        blur(0.7px);
+}
 /* INSTRUCTION */
 
 #pieces-instruction {
