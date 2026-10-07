@@ -32,6 +32,10 @@ body {
     overflow: hidden;
 }
 
+.scene.active {
+    display: flex;
+}
+
 
 /* SCENE CONTENT */
 
@@ -592,6 +596,10 @@ body {
    SCENE 4
 ========================= */
 
+/* =========================
+   SCENE 4
+========================= */
+
 #scene4 {
     background: #050505;
 }
@@ -619,10 +627,6 @@ body {
 
 /* PUZZLE AREA */
 
-/* =========================
-   SIX MEMORY PIECES
-========================= */
-
 #memory-pieces {
     position: relative;
 
@@ -631,8 +635,12 @@ body {
 
     max-width: 85vw;
     max-height: 60vh;
+
+    margin: 0 auto;
 }
 
+
+/* ALL PUZZLE PIECES */
 
 .memory-piece {
     position: absolute;
@@ -640,14 +648,11 @@ body {
     width: 200px;
     height: 200px;
 
-    background-image:
-        url("memory.jpg");
+    background-image: url("memory.jpg");
 
-    background-size:
-        600px 400px;
+    background-size: 600px 400px;
 
-    border: 1px solid
-        rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.15);
 
     cursor: grab;
 
@@ -663,8 +668,7 @@ body {
     z-index: 10;
 
     box-shadow:
-        0 0 25px
-        rgba(255,255,255,0.15);
+        0 0 25px rgba(255,255,255,0.15);
 }
 
 
@@ -673,10 +677,10 @@ body {
 .piece1 {
     background-position: 0 0;
 
-    left: -80px;
-    top: -50px;
+    left: 0;
+    top: 0;
 
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
 }
 
 
@@ -684,19 +688,19 @@ body {
     background-position: 50% 0;
 
     left: 200px;
-    top: -100px;
+    top: 0;
 
-    transform: rotate(3deg);
+    transform: rotate(2deg);
 }
 
 
 .piece3 {
     background-position: 100% 0;
 
-    left: 470px;
-    top: -20px;
+    left: 400px;
+    top: 0;
 
-    transform: rotate(7deg);
+    transform: rotate(4deg);
 }
 
 
@@ -705,38 +709,38 @@ body {
 .piece4 {
     background-position: 0 100%;
 
-    left: -60px;
-    top: 250px;
+    left: 0;
+    top: 200px;
 
-    transform: rotate(4deg);
+    transform: rotate(3deg);
 }
 
 
 .piece5 {
     background-position: 50% 100%;
 
-    left: 250px;
-    top: 300px;
+    left: 200px;
+    top: 200px;
 
-    transform: rotate(-6deg);
+    transform: rotate(-2deg);
 }
 
 
 .piece6 {
     background-position: 100% 100%;
 
-    left: 500px;
-    top: 230px;
+    left: 400px;
+    top: 200px;
 
     transform: rotate(-3deg);
-}
-/* THE MEMORY ISN'T PERFECT */
 
-.piece6 {
+    /* The imperfect memory */
     filter:
         brightness(0.75)
         blur(0.7px);
 }
+
+
 /* INSTRUCTION */
 
 #pieces-instruction {
