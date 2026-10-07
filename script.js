@@ -143,8 +143,7 @@ document.addEventListener("mousemove", function(event) {
 
 }
 
-
-
+});
 
 /* CHANGE MEMORY TEXT */
 
