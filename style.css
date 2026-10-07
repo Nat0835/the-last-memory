@@ -772,3 +772,45 @@ body {
 
     transition: opacity 0.3s ease;
 }
+/* =========================
+   MEMORY CLOCK ATMOSPHERE
+========================= */
+
+#scene2 #clock {
+    border-color: rgba(255, 255, 255, 0.45);
+
+    box-shadow:
+        0 0 45px rgba(255, 255, 255, 0.03),
+        inset 0 0 40px rgba(255, 255, 255, 0.025);
+
+    filter: blur(0.2px);
+}
+
+
+/* Slightly imperfect clock numbers */
+
+#scene2 .clock-number {
+    opacity: 0.45;
+
+    filter: blur(0.3px);
+}
+
+
+/* Make the hand softer */
+
+#scene2 #clock-hand {
+    opacity: 0.7;
+
+    box-shadow:
+        0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+
+/* Center dot */
+
+#scene2 #clock-center {
+    opacity: 0.8;
+
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.25);
+}
