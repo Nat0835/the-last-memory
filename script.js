@@ -3,17 +3,13 @@
 // --------------------------------
 
 function showScene(sceneNumber) {
-
     const scenes = document.querySelectorAll(".scene");
 
-    scenes.forEach(scene => {
+    scenes.forEach(function(scene) {
         scene.classList.remove("active");
     });
 
-    const nextScene = document.getElementById(
-        "scene" + sceneNumber
-    );
-
+    const nextScene = document.getElementById("scene" + sceneNumber);
     nextScene.classList.add("active");
 }
 
@@ -25,11 +21,7 @@ function showScene(sceneNumber) {
 document.getElementById("scene1").addEventListener(
     "click",
     function() {
-
-        startAudio();
-
         showScene(2);
-
     }
 );
 const clockHand = document.getElementById("clock-hand");
