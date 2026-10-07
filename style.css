@@ -272,7 +272,7 @@ body {
     background: white;
 
     left: 50%;
-    top: 50%;
+    top: calc(50% - 105px);
 
     transform-origin: bottom center;
 
@@ -291,7 +291,6 @@ body {
 #clock-hand:active {
     cursor: grabbing;
 }
-
 
 /* INSTRUCTION */
 
