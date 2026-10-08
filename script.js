@@ -536,33 +536,39 @@ function checkPiecePosition(piece) {
 
 function checkPuzzleComplete() {
 
-    let complete = true;
+    const correctPieces =
+        document.querySelectorAll(
+            '.memory-piece[data-correct="true"]'
+        );
 
-    pieces.forEach(function(piece) {
+    if (correctPieces.length === 6) {
 
-        if (piece.dataset.correct !== "true") {
-            complete = false;
-        }
-
-    });
-
-    if (complete) {
         finishPuzzle();
+
     }
 }
 
 
+let puzzleFinished = false;
+
 function finishPuzzle() {
+
+    if (puzzleFinished) {
+        return;
+    }
+
+    puzzleFinished = true;
 
     scene4.classList.add("memory-complete");
 
     playMemorySound(65, 2.5, 0.018);
 
     setTimeout(function() {
+
         showScene(5);
+
     }, 2500);
 }
-
 
 /* =========================
    SOUND DESIGN
