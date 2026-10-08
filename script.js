@@ -25,9 +25,13 @@ document.getElementById("scene1").addEventListener(
     "click",
     function() {
 
-        startAudio();
-
         showScene(2);
+
+        try {
+            startAudio();
+        } catch (error) {
+            console.log("Audio could not start:", error);
+        }
 
     }
 );
