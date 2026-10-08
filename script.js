@@ -24,7 +24,11 @@ function showScene(number) {
 document.getElementById("scene1").addEventListener(
     "click",
     function() {
+
+        startAudio();
+
         showScene(2);
+
     }
 );
 const clockHand = document.getElementById("clock-hand");
