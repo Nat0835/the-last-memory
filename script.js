@@ -320,7 +320,6 @@ memory.addEventListener("mousemove", function(event) {
 
     const radius = 70;
 
-
     memoryCover.style.background =
     `radial-gradient(
         circle ${radius}px at ${x}px ${y}px,
@@ -343,7 +342,6 @@ memory.addEventListener("mousemove", function(event) {
             Math.pow(y - lastRevealY, 2)
         );
 
-
         if (distance > 20) {
 
             revealedAmount += distance;
@@ -354,19 +352,27 @@ memory.addEventListener("mousemove", function(event) {
 
 
     lastRevealX = x;
-lastRevealY = y;
+    lastRevealY = y;
 
-if (
-    revealedAmount - lastPhotoSound > 300
-) {
 
-    playMemorySound(
-        95,
-        0.4,
-        0.008
-    );
+    /*
+       Play a very subtle sound
+       every so often.
+    */
 
-    lastPhotoSound = revealedAmount;
+    if (
+        revealedAmount - lastPhotoSound > 300
+    ) {
+
+        playMemorySound(
+            95,
+            0.4,
+            0.008
+        );
+
+        lastPhotoSound = revealedAmount;
+
+    }
 
 
     /*
@@ -376,7 +382,7 @@ if (
 
     if (revealedAmount > 1800) {
 
-    completePhoto();
+        completePhoto();
 
     }
 
@@ -415,11 +421,6 @@ function completePhoto() {
 
 
     setTimeout(function() {
-
-        /*
-           We'll connect this to
-           Scene 4 later.
-        */
 
         showScene(4);
 
