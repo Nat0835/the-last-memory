@@ -557,7 +557,7 @@ function finishPuzzle() {
 
     setTimeout(function() {
         showScene(5);
-    }, 4000);
+    }, 2500);
 }
 
 document.getElementById("restart").addEventListener(
