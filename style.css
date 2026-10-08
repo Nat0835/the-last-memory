@@ -640,15 +640,22 @@ body {
 
 .memory-piece {
     position: absolute;
+
     width: 200px;
     height: 200px;
 
     touch-action: none;
 
-    background-image:
-        url("memory.jpg");
+    cursor: grab;
 
-    ...
+    background-image: url("memory.jpg");
+    background-size: 600px 400px;
+    background-repeat: no-repeat;
+
+    box-sizing: border-box;
+
+    transition:
+        box-shadow 0.2s ease;
 }
 
 
