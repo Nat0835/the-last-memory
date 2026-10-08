@@ -423,191 +423,113 @@ const puzzlePositions = {
     piece6: { x: 400, y: 200 }
 };
 
-
-/* START DRAGGING */
-
-pieces.forEach(function(piece) {
-
-    piece.addEventListener(
-        "pointerdown",
-        function(event) {
-
-            event.preventDefault();
-
-            activePiece = piece;
-
-            const rect =
-                piece.getBoundingClientRect();
-
-            offsetX =
-                event.clientX - rect.left;
-
-            offsetY =
-                event.clientY - rect.top;
-
-            piece.style.zIndex = "10";
-
-            piece.setPointerCapture(
-                event.pointerId
-            );
-        }
-    );
-
-});
-
-
-/* MOVE PIECE */
+const SNAP_DISTANCE = 100;
 
 pieces.forEach(function(piece) {
 
-    piece.addEventListener(
-        "pointermove",
-        function(event) {
+    piece.addEventListener("pointerdown", function(event) {
 
-            if (activePiece !== piece) {
-                return;
-            }
+        event.preventDefault();
 
-            const puzzleRect =
-                puzzle.getBoundingClientRect();
+        activePiece = piece;
 
-            const x =
-                event.clientX -
-                puzzleRect.left -
-                offsetX;
+        const rect = piece.getBoundingClientRect();
 
-            const y =
-                event.clientY -
-                puzzleRect.top -
-                offsetY;
+        offsetX = event.clientX - rect.left;
+        offsetY = event.clientY - rect.top;
 
-            piece.style.left =
-                x + "px";
+        piece.style.zIndex = "10";
 
-            piece.style.top =
-                y + "px";
+        piece.setPointerCapture(event.pointerId);
+    });
+
+    piece.addEventListener("pointermove", function(event) {
+
+        if (activePiece !== piece) return;
+
+        const puzzleRect = puzzle.getBoundingClientRect();
+
+        const x =
+            event.clientX -
+            puzzleRect.left -
+            offsetX;
+
+        const y =
+            event.clientY -
+            puzzleRect.top -
+            offsetY;
+
+        piece.style.left = x + "px";
+        piece.style.top = y + "px";
+    });
+
+    piece.addEventListener("pointerup", function(event) {
+
+        if (activePiece !== piece) return;
+
+        checkPiecePosition(piece);
+
+        piece.style.zIndex = "1";
+
+        if (piece.hasPointerCapture(event.pointerId)) {
+            piece.releasePointerCapture(event.pointerId);
         }
-    );
 
+        activePiece = null;
+    });
+
+    piece.addEventListener("pointercancel", function(event) {
+
+        if (activePiece !== piece) return;
+
+        piece.style.zIndex = "1";
+
+        if (piece.hasPointerCapture(event.pointerId)) {
+            piece.releasePointerCapture(event.pointerId);
+        }
+
+        activePiece = null;
+    });
 });
 
-
-/* RELEASE PIECE */
-
-pieces.forEach(function(piece) {
-
-    piece.addEventListener(
-        "pointerup",
-        function(event) {
-
-            if (activePiece !== piece) {
-                return;
-            }
-
-            checkPiecePosition(piece);
-
-            piece.style.zIndex = "1";
-
-            activePiece = null;
-
-            piece.releasePointerCapture(
-                event.pointerId
-            );
-        }
-    );
-
-});
-
-
-/* CANCEL DRAG IF NEEDED */
-
-pieces.forEach(function(piece) {
-
-    piece.addEventListener(
-        "pointercancel",
-        function(event) {
-
-            if (activePiece !== piece) {
-                return;
-            }
-
-            piece.style.zIndex = "1";
-
-            activePiece = null;
-
-            if (
-                piece.hasPointerCapture(
-                    event.pointerId
-                )
-            ) {
-                piece.releasePointerCapture(
-                    event.pointerId
-                );
-            }
-        }
-    );
-
-});
-
-
-/* CHECK IF PIECE IS CLOSE ENOUGH */
 
 function checkPiecePosition(piece) {
 
-    const pieceName =
-        piece.classList[1];
+    const pieceName = piece.classList[1];
 
-    const target =
-        puzzlePositions[pieceName];
+    const target = puzzlePositions[pieceName];
 
-    if (!target) {
-        return;
-    }
+    if (!target) return;
 
-    const currentX =
-        parseFloat(piece.style.left);
+    const currentX = parseFloat(piece.style.left);
+    const currentY = parseFloat(piece.style.top);
 
-    const currentY =
-        parseFloat(piece.style.top);
+    const distance = Math.sqrt(
+        Math.pow(currentX - target.x, 2) +
+        Math.pow(currentY - target.y, 2)
+    );
 
-    const distance =
-        Math.sqrt(
-            Math.pow(
-                currentX - target.x,
-                2
-            ) +
-            Math.pow(
-                currentY - target.y,
-                2
-            )
-        );
+    if (distance <= SNAP_DISTANCE) {
 
-    if (distance < 70) {
+        // Put the piece exactly where it belongs
+        piece.style.left = target.x + "px";
+        piece.style.top = target.y + "px";
 
-        piece.style.left =
-            target.x + "px";
+        // Remove the starting rotation
+        piece.style.transform = "rotate(0deg)";
 
-        piece.style.top =
-            target.y + "px";
+        // Mark the piece as correct
+        piece.dataset.correct = "true";
 
-        piece.style.transform =
-            "rotate(0deg)";
+        // Make it impossible to accidentally move after snapping
+        piece.style.pointerEvents = "none";
 
-        piece.dataset.correct =
-            "true";
-
-        playMemorySound(
-            160,
-            0.18,
-            0.02
-        );
+        playMemorySound(160, 0.18, 0.02);
     }
 
     checkPuzzleComplete();
 }
 
-
-/* CHECK IF ALL SIX PIECES ARE CORRECT */
 
 function checkPuzzleComplete() {
 
@@ -615,10 +537,7 @@ function checkPuzzleComplete() {
 
     pieces.forEach(function(piece) {
 
-        if (
-            piece.dataset.correct !==
-            "true"
-        ) {
+        if (piece.dataset.correct !== "true") {
             complete = false;
         }
 
@@ -630,24 +549,14 @@ function checkPuzzleComplete() {
 }
 
 
-/* FINISH PUZZLE */
-
 function finishPuzzle() {
 
-    scene4.classList.add(
-        "memory-complete"
-    );
+    scene4.classList.add("memory-complete");
 
-    playMemorySound(
-        65,
-        2.5,
-        0.018
-    );
+    playMemorySound(65, 2.5, 0.018);
 
     setTimeout(function() {
-
         showScene(5);
-
     }, 4000);
 }
 
