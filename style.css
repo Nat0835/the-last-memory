@@ -670,77 +670,44 @@ body {
 
 .piece1 {
     background-position: 0 0;
-
-    left: -70px;
+    left: -80px;
     top: -50px;
-
     transform: rotate(-5deg);
 }
 
-
-/* Top middle */
-
 .piece2 {
-    background-position: 50% 0;
-
-    left: 210px;
-    top: -90px;
-
-    transform: rotate(4deg);
+    background-position: -200px 0;
+    left: 200px;
+    top: -100px;
+    transform: rotate(3deg);
 }
-
-
-/* Top right */
 
 .piece3 {
-    background-position: 100% 0;
-
+    background-position: -400px 0;
     left: 470px;
-    top: -30px;
-
-    transform: rotate(6deg);
+    top: -20px;
+    transform: rotate(7deg);
 }
 
-
-/* Bottom left */
-
 .piece4 {
-    background-position: 0 100%;
-
+    background-position: 0 -200px;
     left: -60px;
     top: 250px;
-
     transform: rotate(4deg);
 }
 
-
-/* Bottom middle */
-
 .piece5 {
-    background-position: 50% 100%;
-
+    background-position: -200px -200px;
     left: 250px;
     top: 300px;
-
     transform: rotate(-6deg);
 }
 
-
-/* Bottom right */
-
 .piece6 {
-    background-position: 100% 100%;
-
+    background-position: -400px -200px;
     left: 500px;
     top: 230px;
-
     transform: rotate(-3deg);
-
-    /* Slightly imperfect memory */
-
-    filter:
-        brightness(0.75)
-        blur(0.7px);
 }
 
 
