@@ -793,81 +793,140 @@ body {
     transition: transform 1.5s ease;
 }
 /* =========================
-   SCENE 5
+   QUIET SCENE 5
 ========================= */
 
 #scene5 {
     background: #050505;
+
+    opacity: 0;
+
+    transition:
+        opacity 4s ease;
 }
 
+
+/* MAIN CONTENT */
 
 #scene5 .story-content {
     opacity: 0;
 
-    animation: endingFadeIn 3s ease forwards;
+    transition:
+        opacity 4s ease;
 }
 
+
+/* ENDING TEXT */
 
 #scene5 .ending {
     margin: 0;
 
-    max-width: 600px;
+    width: 600px;
+    max-width: 80vw;
 
-    font-size: 1.35rem;
+    font-size: 1.25rem;
 
     font-weight: 300;
 
-    line-height: 1.8;
+    line-height: 2;
 
-    letter-spacing: 0.08em;
-}
+    letter-spacing: 0.1em;
 
-
-#scene5 #restart {
-    margin-top: 50px;
+    text-align: center;
 
     opacity: 0;
 
-    animation: restartFadeIn 2s ease forwards;
+    transition:
+        opacity 4s ease;
+}
 
-    animation-delay: 4s;
+
+/* RESTART */
+
+#scene5 #restart {
+    margin-top: 60px;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+
+    opacity: 0;
 
     cursor: pointer;
+
+    transition:
+        opacity 3s ease;
 }
 
 
-@keyframes endingFadeIn {
+/* SCENE 5 ACTIVE */
 
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+#scene5.active {
+    display: flex;
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-@keyframes restartFadeIn {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 0.5;
-    }
-
-}
-
-
-#scene5 #restart:hover {
     opacity: 1;
+}
 
-    transition: opacity 0.3s ease;
+
+/* CONTENT APPEARS */
+
+#scene5.active .story-content {
+    opacity: 1;
+}
+
+
+/* ENDING APPEARS */
+
+#scene5.active .ending {
+    animation:
+        quietEnding 5s ease forwards;
+}
+
+
+/* RESTART APPEARS MUCH LATER */
+
+#scene5.active #restart {
+    animation:
+        quietRestart 3s ease forwards;
+
+    animation-delay: 7s;
+}
+
+
+@keyframes quietEnding {
+
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(5px);
+    }
+
+    60% {
+        opacity: 0.7;
+        filter: blur(1px);
+    }
+
+    100% {
+        opacity: 0.85;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+}
+
+
+@keyframes quietRestart {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.35;
+    }
+
 }
 /* =========================
    MEMORY CLOCK ATMOSPHERE
