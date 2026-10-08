@@ -569,7 +569,14 @@ function finishPuzzle() {
 
     }, 2500);
 }
+document.getElementById("scene5").addEventListener(
+    "click",
+    function() {
 
+        showScene(1);
+
+    }
+);
 /* =========================
    SOUND DESIGN
 ========================= */
