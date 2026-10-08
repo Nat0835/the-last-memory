@@ -402,7 +402,6 @@ function completePhoto() {
     }, 2500);
 
 }
-```javascript
 const pieces = document.querySelectorAll(".memory-piece");
 const puzzle = document.getElementById("memory-pieces");
 const scene4 = document.getElementById("scene4");
@@ -412,137 +411,157 @@ let offsetX = 0;
 let offsetY = 0;
 
 
-/* --------------------------------
-   PUZZLE TARGET POSITIONS
--------------------------------- */
+/* =========================
+   CORRECT PUZZLE POSITIONS
+========================= */
 
-const puzzleTargets = {
+const puzzlePositions = {
 
     piece1: {
-        left: 0,
-        top: 0
+        x: 0,
+        y: 0
     },
 
     piece2: {
-        left: 200,
-        top: 0
+        x: 200,
+        y: 0
     },
 
     piece3: {
-        left: 400,
-        top: 0
+        x: 400,
+        y: 0
     },
 
     piece4: {
-        left: 0,
-        top: 200
+        x: 0,
+        y: 200
     },
 
     piece5: {
-        left: 200,
-        top: 200
+        x: 200,
+        y: 200
     },
 
     piece6: {
-        left: 400,
-        top: 200
+        x: 400,
+        y: 200
     }
 
 };
 
 
-/* --------------------------------
+/* =========================
    START DRAGGING
--------------------------------- */
+========================= */
 
 pieces.forEach(function(piece) {
 
-    piece.addEventListener("mousedown", function(event) {
+    piece.addEventListener(
+        "mousedown",
+        function(event) {
 
-        activePiece = piece;
+            activePiece = piece;
 
-        const rect =
-            piece.getBoundingClientRect();
+            const rect =
+                piece.getBoundingClientRect();
 
-        offsetX =
-            event.clientX - rect.left;
+            offsetX =
+                event.clientX - rect.left;
 
-        offsetY =
-            event.clientY - rect.top;
+            offsetY =
+                event.clientY - rect.top;
 
-        piece.style.zIndex = "10";
+            piece.style.zIndex = "10";
 
-    });
+        }
+    );
 
 });
 
 
-/* --------------------------------
+/* =========================
    MOVE PIECE
--------------------------------- */
+========================= */
 
-document.addEventListener("mousemove", function(event) {
+document.addEventListener(
+    "mousemove",
+    function(event) {
 
-    if (!activePiece) {
-        return;
+        if (!activePiece) {
+            return;
+        }
+
+
+        const puzzleRect =
+            puzzle.getBoundingClientRect();
+
+
+        let x =
+            event.clientX -
+            puzzleRect.left -
+            offsetX;
+
+
+        let y =
+            event.clientY -
+            puzzleRect.top -
+            offsetY;
+
+
+        activePiece.style.left =
+            x + "px";
+
+        activePiece.style.top =
+            y + "px";
+
     }
-
-    const puzzleRect =
-        puzzle.getBoundingClientRect();
-
-    let x =
-        event.clientX -
-        puzzleRect.left -
-        offsetX;
-
-    let y =
-        event.clientY -
-        puzzleRect.top -
-        offsetY;
-
-    activePiece.style.left =
-        x + "px";
-
-    activePiece.style.top =
-        y + "px";
-
-});
+);
 
 
-/* --------------------------------
+/* =========================
    STOP DRAGGING
--------------------------------- */
+========================= */
 
-document.addEventListener("mouseup", function() {
+document.addEventListener(
+    "mouseup",
+    function() {
 
-    if (!activePiece) {
-        return;
+        if (!activePiece) {
+            return;
+        }
+
+
+        checkPiecePosition(
+            activePiece
+        );
+
+
+        activePiece.style.zIndex = "1";
+
+        activePiece = null;
+
     }
-
-    checkPiecePosition(activePiece);
-
-    activePiece.style.zIndex = "1";
-
-    activePiece = null;
-
-});
+);
 
 
-/* --------------------------------
+/* =========================
    CHECK PIECE POSITION
--------------------------------- */
+========================= */
 
 function checkPiecePosition(piece) {
 
-    const className =
+    const pieceName =
         piece.classList[1];
 
+
     const target =
-        puzzleTargets[className];
+        puzzlePositions[pieceName];
+
 
     if (!target) {
         return;
     }
+
 
     const currentX =
         parseFloat(piece.style.left);
@@ -550,35 +569,46 @@ function checkPiecePosition(piece) {
     const currentY =
         parseFloat(piece.style.top);
 
+
     const distance =
         Math.sqrt(
-            Math.pow(currentX - target.left, 2) +
-            Math.pow(currentY - target.top, 2)
+            Math.pow(
+                currentX - target.x,
+                2
+            ) +
+            Math.pow(
+                currentY - target.y,
+                2
+            )
         );
 
 
     /*
-       If the piece is close enough,
-       snap it into place.
+       If close enough,
+       snap into place.
     */
 
-    if (distance < 60) {
+    if (distance < 70) {
 
-        piece.style.left =
-            target.left + "px";
+    piece.style.left =
+        target.x + "px";
 
-        piece.style.top =
-            target.top + "px";
+    piece.style.top =
+        target.y + "px";
 
-        /* Straighten the piece */
+    piece.style.transform =
+        "rotate(0deg)";
 
-        piece.style.transform =
-            "rotate(0deg)";
+    piece.dataset.correct =
+        "true";
 
-        piece.dataset.correct =
-            "true";
+    playMemorySound(
+        160,
+        0.18,
+        0.02
+    );
 
-    }
+}
 
 
     checkPuzzleComplete();
@@ -586,17 +616,21 @@ function checkPiecePosition(piece) {
 }
 
 
-/* --------------------------------
+/* =========================
    CHECK ALL SIX PIECES
--------------------------------- */
+========================= */
 
 function checkPuzzleComplete() {
 
     let complete = true;
 
+
     pieces.forEach(function(piece) {
 
-        if (piece.dataset.correct !== "true") {
+        if (
+            piece.dataset.correct !==
+            "true"
+        ) {
 
             complete = false;
 
@@ -614,9 +648,9 @@ function checkPuzzleComplete() {
 }
 
 
-/* --------------------------------
-   FINISH SCENE 4
--------------------------------- */
+/* =========================
+   FINISH PUZZLE
+========================= */
 
 function finishPuzzle() {
 
@@ -625,14 +659,20 @@ function finishPuzzle() {
     );
 
 
+    playMemorySound(
+        80,
+        1.5,
+        0.025
+    );
+
+
     setTimeout(function() {
 
         showScene(5);
 
-    }, 3000);
+    }, 4000);
 
 }
-```
 
 document.getElementById("restart").addEventListener(
     "click",
