@@ -596,10 +596,6 @@ body {
    SCENE 4
 ========================= */
 
-/* =========================
-   SCENE 4
-========================= */
-
 #scene4 {
     background: #050505;
 }
@@ -640,7 +636,7 @@ body {
 }
 
 
-/* ALL PUZZLE PIECES */
+/* PUZZLE PIECES */
 
 .memory-piece {
     position: absolute;
@@ -657,8 +653,10 @@ body {
     cursor: grab;
 
     transition:
-        box-shadow 0.3s ease,
-        transform 0.2s ease;
+        left 0.5s ease,
+        top 0.5s ease,
+        transform 0.5s ease,
+        box-shadow 0.3s ease;
 }
 
 
@@ -672,76 +670,91 @@ body {
 }
 
 
-/* TOP ROW */
+/* =========================
+   STARTING POSITIONS
+   ========================= */
+
+/* Top left */
 
 .piece1 {
     background-position: 0 0;
 
-    left: 0;
-    top: 0;
+    left: -70px;
+    top: -50px;
 
-    transform: rotate(-3deg);
+    transform: rotate(-5deg);
 }
 
+
+/* Top middle */
 
 .piece2 {
     background-position: 50% 0;
 
-    left: 200px;
-    top: 0;
-
-    transform: rotate(2deg);
-}
-
-
-.piece3 {
-    background-position: 100% 0;
-
-    left: 400px;
-    top: 0;
+    left: 210px;
+    top: -90px;
 
     transform: rotate(4deg);
 }
 
 
-/* BOTTOM ROW */
+/* Top right */
+
+.piece3 {
+    background-position: 100% 0;
+
+    left: 470px;
+    top: -30px;
+
+    transform: rotate(6deg);
+}
+
+
+/* Bottom left */
 
 .piece4 {
     background-position: 0 100%;
 
-    left: 0;
-    top: 200px;
+    left: -60px;
+    top: 250px;
 
-    transform: rotate(3deg);
+    transform: rotate(4deg);
 }
 
+
+/* Bottom middle */
 
 .piece5 {
     background-position: 50% 100%;
 
-    left: 200px;
-    top: 200px;
+    left: 250px;
+    top: 300px;
 
-    transform: rotate(-2deg);
+    transform: rotate(-6deg);
 }
 
+
+/* Bottom right */
 
 .piece6 {
     background-position: 100% 100%;
 
-    left: 400px;
-    top: 200px;
+    left: 500px;
+    top: 230px;
 
     transform: rotate(-3deg);
 
-    /* The imperfect memory */
+    /* Slightly imperfect memory */
+
     filter:
         brightness(0.75)
         blur(0.7px);
 }
 
 
-/* INSTRUCTION */
+/* =========================
+   INSTRUCTION
+========================= */
 
 #pieces-instruction {
     margin: 25px 0 0;
@@ -756,7 +769,9 @@ body {
 }
 
 
-/* COMPLETED MEMORY */
+/* =========================
+   COMPLETED MEMORY
+========================= */
 
 #scene4.memory-complete #pieces-text {
     opacity: 0;
