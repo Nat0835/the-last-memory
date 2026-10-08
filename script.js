@@ -410,55 +410,25 @@ let activePiece = null;
 let offsetX = 0;
 let offsetY = 0;
 
-
-/* =========================
-   CORRECT PUZZLE POSITIONS
-========================= */
-
 const puzzlePositions = {
-
-    piece1: {
-        x: 0,
-        y: 0
-    },
-
-    piece2: {
-        x: 200,
-        y: 0
-    },
-
-    piece3: {
-        x: 400,
-        y: 0
-    },
-
-    piece4: {
-        x: 0,
-        y: 200
-    },
-
-    piece5: {
-        x: 200,
-        y: 200
-    },
-
-    piece6: {
-        x: 400,
-        y: 200
-    }
-
+    piece1: { x: 0, y: 0 },
+    piece2: { x: 200, y: 0 },
+    piece3: { x: 400, y: 0 },
+    piece4: { x: 0, y: 200 },
+    piece5: { x: 200, y: 200 },
+    piece6: { x: 400, y: 200 }
 };
 
 
-/* =========================
-   START DRAGGING
-========================= */
+/* START DRAGGING */
 
 pieces.forEach(function(piece) {
 
     piece.addEventListener(
         "mousedown",
         function(event) {
+
+            event.preventDefault();
 
             activePiece = piece;
 
@@ -472,16 +442,13 @@ pieces.forEach(function(piece) {
                 event.clientY - rect.top;
 
             piece.style.zIndex = "10";
-
         }
     );
 
 });
 
 
-/* =========================
-   MOVE PIECE
-========================= */
+/* MOVE PIECE */
 
 document.addEventListener(
     "mousemove",
@@ -491,36 +458,29 @@ document.addEventListener(
             return;
         }
 
-
         const puzzleRect =
             puzzle.getBoundingClientRect();
 
-
-        let x =
+        const x =
             event.clientX -
             puzzleRect.left -
             offsetX;
 
-
-        let y =
+        const y =
             event.clientY -
             puzzleRect.top -
             offsetY;
-
 
         activePiece.style.left =
             x + "px";
 
         activePiece.style.top =
             y + "px";
-
     }
 );
 
 
-/* =========================
-   STOP DRAGGING
-========================= */
+/* RELEASE PIECE */
 
 document.addEventListener(
     "mouseup",
@@ -530,45 +490,53 @@ document.addEventListener(
             return;
         }
 
-
-        checkPiecePosition(
-            activePiece
-        );
-
+        checkPiecePosition(activePiece);
 
         activePiece.style.zIndex = "1";
 
         activePiece = null;
-
     }
 );
 
 
-/* =========================
-   CHECK PIECE POSITION
-========================= */
+/* ALSO RELEASE IF CURSOR LEAVES WINDOW */
+
+document.addEventListener(
+    "mouseleave",
+    function() {
+
+        if (!activePiece) {
+            return;
+        }
+
+        checkPiecePosition(activePiece);
+
+        activePiece.style.zIndex = "1";
+
+        activePiece = null;
+    }
+);
+
+
+/* CHECK IF PIECE IS CLOSE ENOUGH */
 
 function checkPiecePosition(piece) {
 
     const pieceName =
         piece.classList[1];
 
-
     const target =
         puzzlePositions[pieceName];
-
 
     if (!target) {
         return;
     }
-
 
     const currentX =
         parseFloat(piece.style.left);
 
     const currentY =
         parseFloat(piece.style.top);
-
 
     const distance =
         Math.sqrt(
@@ -582,48 +550,36 @@ function checkPiecePosition(piece) {
             )
         );
 
-
-    /*
-       If close enough,
-       snap into place.
-    */
-
     if (distance < 70) {
 
-    piece.style.left =
-        target.x + "px";
+        piece.style.left =
+            target.x + "px";
 
-    piece.style.top =
-        target.y + "px";
+        piece.style.top =
+            target.y + "px";
 
-    piece.style.transform =
-        "rotate(0deg)";
+        piece.style.transform =
+            "rotate(0deg)";
 
-    piece.dataset.correct =
-        "true";
+        piece.dataset.correct =
+            "true";
 
-    playMemorySound(
-        160,
-        0.18,
-        0.02
-    );
-
-}
-
+        playMemorySound(
+            160,
+            0.18,
+            0.02
+        );
+    }
 
     checkPuzzleComplete();
-
 }
 
 
-/* =========================
-   CHECK ALL SIX PIECES
-========================= */
+/* CHECK IF ALL SIX PIECES ARE CORRECT */
 
 function checkPuzzleComplete() {
 
     let complete = true;
-
 
     pieces.forEach(function(piece) {
 
@@ -631,26 +587,18 @@ function checkPuzzleComplete() {
             piece.dataset.correct !==
             "true"
         ) {
-
             complete = false;
-
         }
 
     });
 
-
     if (complete) {
-
         finishPuzzle();
-
     }
-
 }
 
 
-/* =========================
-   FINISH PUZZLE
-========================= */
+/* FINISH PUZZLE */
 
 function finishPuzzle() {
 
@@ -658,20 +606,17 @@ function finishPuzzle() {
         "memory-complete"
     );
 
-
     playMemorySound(
-    65,
-    2.5,
-    0.018
-);
-
+        65,
+        2.5,
+        0.018
+    );
 
     setTimeout(function() {
 
         showScene(5);
 
     }, 4000);
-
 }
 
 document.getElementById("restart").addEventListener(
