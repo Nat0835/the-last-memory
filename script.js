@@ -553,11 +553,9 @@ function checkPiecePosition(piece) {
 
     if (distance < 60) {
 
-        piece.style.left =
-            targetX + "px";
-
-        piece.style.top =
-            targetY + "px";
+        piece.style.left = target.left + "px";
+piece.style.top = target.top + "px";
+piece.style.transform = "rotate(0deg)";
 
         piece.dataset.correct =
             "true";
