@@ -293,6 +293,7 @@ const photoText = document.getElementById("photo-text");
 let revealedAmount = 0;
 let lastRevealX = null;
 let lastRevealY = null;
+let lastPhotoSound = 0;
 
 
 /* MOUSE MOVEMENT OVER PHOTO */
@@ -349,7 +350,19 @@ memory.addEventListener("mousemove", function(event) {
 
 
     lastRevealX = x;
-    lastRevealY = y;
+lastRevealY = y;
+
+if (
+    revealedAmount - lastPhotoSound > 300
+) {
+
+    playMemorySound(
+        95,
+        0.4,
+        0.008
+    );
+
+    lastPhotoSound = revealedAmount;
 
 
     /*
@@ -359,7 +372,7 @@ memory.addEventListener("mousemove", function(event) {
 
     if (revealedAmount > 1800) {
 
-        completePhoto();
+    completePhoto();
 
     }
 
@@ -563,11 +576,19 @@ function finishPuzzle() {
 
     puzzleFinished = true;
 
-    scene4.classList.add("memory-complete");
+    scene4.classList.add(
+        "memory-complete"
+    );
 
-    playMemorySound(65, 2.5, 0.018);
+    playMemorySound(
+        65,
+        2.5,
+        0.018
+    );
 
     setTimeout(function() {
+
+        fadeAmbient();
 
         showScene(5);
 
@@ -587,24 +608,35 @@ document.getElementById("scene5").addEventListener(
 
 let audioContext;
 let ambientStarted = false;
+let ambientOscillator;
+let ambientGain;
 
 
-/* CREATE AUDIO */
+/* START AUDIO */
 
 function startAudio() {
 
     if (ambientStarted) {
+
+        if (
+            audioContext &&
+            audioContext.state === "suspended"
+        ) {
+            audioContext.resume();
+        }
+
         return;
     }
 
     audioContext =
-        new (window.AudioContext ||
-        window.webkitAudioContext)();
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
 
     ambientStarted = true;
 
     playAmbient();
-
 }
 
 
@@ -612,33 +644,34 @@ function startAudio() {
 
 function playAmbient() {
 
-    const oscillator =
+    ambientOscillator =
         audioContext.createOscillator();
 
-    const gain =
+    ambientGain =
         audioContext.createGain();
 
+    ambientOscillator.type = "sine";
 
-    oscillator.type = "sine";
+    ambientOscillator.frequency.value = 55;
 
-    oscillator.frequency.value = 55;
+    ambientGain.gain.setValueAtTime(
+        0.012,
+        audioContext.currentTime
+    );
 
-    gain.gain.value = 0.015;
+    ambientOscillator.connect(
+        ambientGain
+    );
 
-
-    oscillator.connect(gain);
-
-    gain.connect(
+    ambientGain.connect(
         audioContext.destination
     );
 
-
-    oscillator.start();
-
+    ambientOscillator.start();
 }
 
 
-/* SMALL SOUND */
+/* SMALL MEMORY SOUND */
 
 function playMemorySound(
     frequency = 180,
@@ -650,6 +683,13 @@ function playMemorySound(
         return;
     }
 
+    if (
+        audioContext.state === "suspended"
+    ) {
+
+        audioContext.resume();
+
+    }
 
     const oscillator =
         audioContext.createOscillator();
@@ -657,18 +697,17 @@ function playMemorySound(
     const gain =
         audioContext.createGain();
 
-
     oscillator.type = "sine";
 
-    oscillator.frequency.value =
-        frequency;
-
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        audioContext.currentTime
+    );
 
     gain.gain.setValueAtTime(
         volume,
         audioContext.currentTime
     );
-
 
     gain.gain.exponentialRampToValueAtTime(
         0.001,
@@ -676,13 +715,11 @@ function playMemorySound(
         duration
     );
 
-
     oscillator.connect(gain);
 
     gain.connect(
         audioContext.destination
     );
-
 
     oscillator.start();
 
@@ -690,5 +727,31 @@ function playMemorySound(
         audioContext.currentTime +
         duration
     );
+}
 
+
+/* FADE OUT AMBIENT SOUND */
+
+function fadeAmbient() {
+
+    if (
+        !audioContext ||
+        !ambientGain
+    ) {
+        return;
+    }
+
+    ambientGain.gain.cancelScheduledValues(
+        audioContext.currentTime
+    );
+
+    ambientGain.gain.setValueAtTime(
+        ambientGain.gain.value,
+        audioContext.currentTime
+    );
+
+    ambientGain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 3
+    );
 }
