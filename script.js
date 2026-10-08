@@ -402,6 +402,10 @@ function completePhoto() {
     }, 2500);
 
 }
+/* =========================
+   SCENE 4 - MEMORY PUZZLE
+========================= */
+
 const pieces = document.querySelectorAll(".memory-piece");
 const puzzle = document.getElementById("memory-pieces");
 const scene4 = document.getElementById("scene4");
@@ -425,7 +429,7 @@ const puzzlePositions = {
 pieces.forEach(function(piece) {
 
     piece.addEventListener(
-        "mousedown",
+        "pointerdown",
         function(event) {
 
             event.preventDefault();
@@ -442,6 +446,10 @@ pieces.forEach(function(piece) {
                 event.clientY - rect.top;
 
             piece.style.zIndex = "10";
+
+            piece.setPointerCapture(
+                event.pointerId
+            );
         }
     );
 
@@ -450,72 +458,96 @@ pieces.forEach(function(piece) {
 
 /* MOVE PIECE */
 
-document.addEventListener(
-    "mousemove",
-    function(event) {
+pieces.forEach(function(piece) {
 
-        if (!activePiece) {
-            return;
+    piece.addEventListener(
+        "pointermove",
+        function(event) {
+
+            if (activePiece !== piece) {
+                return;
+            }
+
+            const puzzleRect =
+                puzzle.getBoundingClientRect();
+
+            const x =
+                event.clientX -
+                puzzleRect.left -
+                offsetX;
+
+            const y =
+                event.clientY -
+                puzzleRect.top -
+                offsetY;
+
+            piece.style.left =
+                x + "px";
+
+            piece.style.top =
+                y + "px";
         }
+    );
 
-        const puzzleRect =
-            puzzle.getBoundingClientRect();
-
-        const x =
-            event.clientX -
-            puzzleRect.left -
-            offsetX;
-
-        const y =
-            event.clientY -
-            puzzleRect.top -
-            offsetY;
-
-        activePiece.style.left =
-            x + "px";
-
-        activePiece.style.top =
-            y + "px";
-    }
-);
+});
 
 
 /* RELEASE PIECE */
 
-document.addEventListener(
-    "mouseup",
-    function() {
+pieces.forEach(function(piece) {
 
-        if (!activePiece) {
-            return;
+    piece.addEventListener(
+        "pointerup",
+        function(event) {
+
+            if (activePiece !== piece) {
+                return;
+            }
+
+            checkPiecePosition(piece);
+
+            piece.style.zIndex = "1";
+
+            activePiece = null;
+
+            piece.releasePointerCapture(
+                event.pointerId
+            );
         }
+    );
 
-        checkPiecePosition(activePiece);
-
-        activePiece.style.zIndex = "1";
-
-        activePiece = null;
-    }
-);
+});
 
 
-/* ALSO RELEASE IF CURSOR LEAVES WINDOW */
+/* CANCEL DRAG IF NEEDED */
 
-document.addEventListener(
-    "mouseleave",
-    function() {
+pieces.forEach(function(piece) {
 
-        if (!activePiece) {
-            return;
+    piece.addEventListener(
+        "pointercancel",
+        function(event) {
+
+            if (activePiece !== piece) {
+                return;
+            }
+
+            piece.style.zIndex = "1";
+
+            activePiece = null;
+
+            if (
+                piece.hasPointerCapture(
+                    event.pointerId
+                )
+            ) {
+                piece.releasePointerCapture(
+                    event.pointerId
+                );
+            }
         }
+    );
 
-        checkPiecePosition(activePiece);
-
-        activePiece.style.zIndex = "1";
-
-        activePiece = null;
-    }
-);
+});
 
 
 /* CHECK IF PIECE IS CLOSE ENOUGH */
