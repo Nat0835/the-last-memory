@@ -563,14 +563,7 @@ function finishPuzzle() {
     }, 2500);
 }
 
-document.getElementById("restart").addEventListener(
-    "click",
-    function() {
 
-        showScene(1);
-
-    }
-);
 /* =========================
    SOUND DESIGN
 ========================= */
