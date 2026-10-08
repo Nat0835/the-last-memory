@@ -2,17 +2,20 @@
 // SCENE CONTROL
 // --------------------------------
 
-function showScene(sceneNumber) {
+function showScene(number) {
+
     const scenes = document.querySelectorAll(".scene");
 
     scenes.forEach(function(scene) {
         scene.classList.remove("active");
     });
 
-    const nextScene = document.getElementById("scene" + sceneNumber);
-    nextScene.classList.add("active");
-}
+    const nextScene = document.getElementById("scene" + number);
 
+    if (nextScene) {
+        nextScene.classList.add("active");
+    }
+}
 
 // --------------------------------
 // START THE STORY
