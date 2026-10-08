@@ -660,10 +660,10 @@ function finishPuzzle() {
 
 
     playMemorySound(
-        80,
-        1.5,
-        0.025
-    );
+    65,
+    2.5,
+    0.018
+);
 
 
     setTimeout(function() {
